@@ -1,0 +1,40 @@
+version: '3.1'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+    environment:
+      - REACT_APP_BACKEND_URL=http://localhost:5050
+      - REACT_APP_FRONTEND_URL=http://localhost:3000
+      - NODE_ENV=development
+      - STRIPE_PUB_KEY= #Paste Stripe public spi key for frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./backend
+    environment:
+      - NODE_ENV=development
+      - DB_NAME=app
+      - DB_USER=admin
+      - DB_HOST=db
+      - DB_PASSWORD=password
+      - STRIPE_KEY= #Paste Stripe api key here
+    ports:
+      - "5050:5050"
+    depends_on:
+      - db
+
+  db:
+    build:
+      context: ./db
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=admin
+      - POSTGRES_DB=app
+    ports:
+      - "5437:5437"

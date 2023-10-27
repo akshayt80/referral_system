@@ -1,0 +1,5 @@
+FROM postgres:14.3
+
+ENV POSTGRES_PASSWORD "password"
+ENV POSTGRES_USER "admin"
+ENV POSTGRES_DB "app"
